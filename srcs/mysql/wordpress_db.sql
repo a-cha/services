@@ -465,7 +465,7 @@ CREATE TABLE `wp_users` (
 --
 
 INSERT INTO `wp_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES
-(1, 'root', '$P$BDJO/xjXSPV/UYlrpTwvL1n0TkoVt6/', 'root', 'd@d.com', '', '2020-11-15 19:46:18', '', 0, 'root'),
+(1, 'admin', '$P$BDJO/xjXSPV/UYlrpTwvL1n0TkoVt6/', 'admin', 'd@d.com', '', '2020-11-15 19:46:18', '', 0, 'admin'),
 (2, 'sadolph', '$P$Bakl7xyJ4l5GUm7Ui328t8J.nJQq4S1', 'sadolph', 'sadolph@s.com', '', '2020-11-15 19:48:04', '', 0, 'sadolph'),
 (3, 'user', '$P$B/VnPg8KYTiQAuGjLREHWNruichv3P.', 'user', 'user@u.com', '', '2020-11-15 19:49:06', '', 0, 'user');
 
