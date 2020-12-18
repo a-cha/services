@@ -21,17 +21,20 @@ RUN			apk update && apk upgrade &&									\
 			php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql 	\
 			php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext 		\
 			php7-ldap php7-ctype php7-dom 									\
-			supervisor 														
+			openrc
+#			supervisor
 
 RUN			wget http://wordpress.org/latest.tar.gz
 RUN			tar -xzvf latest.tar.gz
 RUN			rm latest.tar.gz
-RUN			mv wordpress /var/www/html
 
 COPY		nginx_default /etc/nginx/nginx.conf 
-COPY		supervisor.conf /etc/supervisord.conf
-COPY		wp-config.php /var/www/html/wordpress
+#COPY		supervisor.conf /etc/supervisord.conf
+COPY		wp-config.php /var/www/html/wp-config.php
 
-EXPOSE		5050
+EXPOSE		80
 
-ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+#ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+COPY	openrc.sh /
+RUN		chmod +x /openrc.sh
+CMD		/openrc.sh
