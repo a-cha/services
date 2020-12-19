@@ -4,8 +4,8 @@
 
 if [[ $1 == 're' ]]
 then
-	kubectl delete deploy wp-mysql-deployment
-	kubectl delete svc wp-mysql-service
+	kubectl delete deploy mysql-deployment
+	kubectl delete svc mysql-service
 	kubectl delete deploy wordpress-deployment
 	kubectl delete svc wordpress-service
 	kubectl delete deploy php-deployment

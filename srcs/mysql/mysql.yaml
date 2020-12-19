@@ -15,11 +15,26 @@ spec:
       targetPort: 3306
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manuam
+  hostPath:
+    path: "/data"
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   labels:
-    app: wordpress
+    app: mysql
 spec:
   accessModes:
     - ReadWriteOnce
@@ -50,12 +65,6 @@ spec:
       containers:
       - name: mysql
         image: mysql_image
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-pass
-              key: password
         ports:
         - containerPort: 3306
           name: myslq

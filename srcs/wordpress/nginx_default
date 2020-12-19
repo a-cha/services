@@ -1,15 +1,18 @@
 server {
-	listen 80 default_server;
+	listen 5050;
 
-	root /var/www/html;
+	root /;
 	index index.html index.htm index.php;
-	 
+
 	location / {
 		try_files $uri $uri/ =404;
 	}
 
-	location ~ \.php$ {
-		include snippets/fastcgi-php.conf;
-		fastcgi_pass unix:/run/php/php7-fpm.sock;
-	}
+	location ~\.php$
+		{
+			include fastcgi_params;
+			fastcgi_param	SCRIPT_FILENAME			$document_root$fastcgi_script_name;
+			fastcgi_index	index.php;
+			fastcgi_pass localhost:9000;
+		}
 }

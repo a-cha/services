@@ -16,15 +16,13 @@ LABEL		maintainer="sadolph"
 WORKDIR		/project
 
 RUN			apk update && 										\
-			apk add mariadb mariadb-client openrc
+			apk add mysql mysql-client openrc
 
 COPY		start.sh /project
 COPY		my.cnf /etc/mysql
 COPY		wordpress_db.sql /project
 
 RUN			chmod +x start.sh
-
-VOLUME		["/var/lib/mysql"]
 
 EXPOSE		3306
 
