@@ -3,7 +3,7 @@ error_log                       /var/log/nginx/error.log warn;
 server {
 	listen 5050;
 
-	root /wordpress;
+	root /www;
 	index index.php;
 
 	location / {
