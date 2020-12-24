@@ -1,3 +1,37 @@
+WP
+wp-config:
+username and pass for mysql (into mysql I skip the pass)
+mysql hostname
+
+SQL
+without it's own yaml? (new subj)
+
+PHP
+config.inc:
+Set valid Server parameters
+
+FTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Цель проекта - научиться разворачивать кластеры Cubernetes.
 Итоговый кластер Cubernetes будет содержать в себе несколько контейнеров (один для каждого сервиса / процесса). Такое построение контейнеров является правильным.
 

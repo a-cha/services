@@ -14,6 +14,7 @@ FROM		alpine:latest
 LABEL		maintainer="sadolph"
 
 USER		root
+#WORKDIR		project
 
 RUN			apk update && apk upgrade &&									\
 			apk add nginx 													\
@@ -27,17 +28,17 @@ RUN			wget http://wordpress.org/latest.tar.gz
 RUN			tar -xzvf latest.tar.gz
 RUN			rm latest.tar.gz
 RUN			mv wordpress /
-RUN			chgrp -R www-data /wordpress
+
+RUN			chgrp -R root /wordpress
 RUN			chmod -R 775 /wordpress
 RUN			mkdir -p /run/nginx
+RUN			chmod -R 775 /run/nginx
 
 COPY		nginx_default /etc/nginx/conf.d/default.conf
-#COPY		supervisor.conf /etc/supervisord.conf
 COPY		wp-config.php /var/www/html/wp-config.php
 
-EXPOSE		80
+EXPOSE		5050
 
-#ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-COPY	openrc.sh /
-RUN		chmod +x /openrc.sh
-CMD		/openrc.sh
+COPY		start.sh /
+RUN			chmod +x /start.sh
+CMD			/start.sh

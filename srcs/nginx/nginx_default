@@ -11,10 +11,27 @@ http {
 		
 		ssl_certificate 	/etc/ssl/certs/localhost.crt;
 		ssl_certificate_key	/etc/ssl/certs/localhost.key;
-			 
+
+
+		location /wordpress {
+			return 307 http://192.168.99.100:5050;
+		}
+
+		location /phpmyadmin {
+		   proxy_pass http://192.168.99.100:5000;
+		}
+
+		location /wp {
+		   rewrite ^/wp(.*)$ /wp$1 permanent;
+			proxy_pass         http://192.168.99.100:5050/;
+			proxy_set_header   Host $host;
+		}
+
+
 		location / {
 			try_files $uri $uri/ =404;
 		}
+
 	}
 }
 

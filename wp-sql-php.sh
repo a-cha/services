@@ -12,15 +12,10 @@ then
 	kubectl delete svc php-service
 fi
 
-if [[ $(kubectl get pods | grep "wordpress-deployment" | awk '{ print $2 }') != "1/1" ]] || \
-	[[ $(kubectl get pods | grep "wordpress-deployment" | awk '{ print $2 }') != "1/1" ]] || \
-	[[ $1 == 'force' ]]
-then
-	docker build -t mysql_image srcs/mysql 
-	docker build -t wordpress_image srcs/wordpress
-	docker build -t php_image srcs/phpmyadmin
-	kubectl apply -k ./
-fi
+docker build -t mysql_image srcs/mysql
+docker build -t wordpress_image srcs/wordpress
+docker build -t php_image srcs/phpmyadmin
+kubectl apply -k ./
 
 if [[ $1 != 'd' ]] && [[ $2 != 'd' ]]
 then
