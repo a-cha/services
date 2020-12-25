@@ -17,7 +17,7 @@ WORKDIR		/project
 
 RUN			apk update && apk upgrade && apk add php7 php7-fpm php7-opcache \
 			php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session \
-			--no-cache nginx
+			--no-cache nginx php7-fpm
 
 RUN			wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
@@ -30,10 +30,12 @@ RUN			chmod -R 775 /run/nginx
 COPY		nginx_default /etc/nginx/conf.d/default.conf
 RUN			mkdir -p /www
 COPY		config.inc.php /www/
+COPY		supervisor.conf /etc/supervisord.conf
 
 EXPOSE		5000
 
+ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 #ENTRYPOINT	["php", "-S", "0.0.0.0:5000", "-t", "/www/"]
-COPY		start.sh /
-RUN			chmod +x /start.sh
-CMD			/start.sh
+#COPY		start.sh /
+#RUN			chmod +x /start.sh
+#CMD			/start.sh

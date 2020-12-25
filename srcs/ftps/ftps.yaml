@@ -14,14 +14,6 @@ spec:
       name: http
       port: 21
       targetPort: 21
-    - protocol: TCP
-      name: http1
-      port: 20
-      targetPort: 20
-    - protocol: TCP
-      name: http2
-      port: 420
-      targetPort: 420
 ---
 apiVersion: apps/v1
 kind: Deployment

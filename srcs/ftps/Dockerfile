@@ -23,11 +23,11 @@ COPY		vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY		start.sh /project/
 
 RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
-			-keyout /etc/ssl/private/vsftpd.key 								\
+			-keyout /etc/ssl/private/vsftpd.key 							\
 			-out /etc/ssl/certs/vsftpd.pem 									\
 			-subj "/C=RU/ST=Russia/L=Kazan/O=School21/OU=4th Wave/CN=sadolph"
 
-EXPOSE		20 420 21
+EXPOSE		20 21
 RUN			chmod 755 start.sh
 
 ENTRYPOINT	sh start.sh

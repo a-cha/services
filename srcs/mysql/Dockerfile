@@ -13,15 +13,18 @@
 FROM		alpine:latest
 LABEL		maintainer="sadolph"
 
-WORKDIR		/project
-
 RUN			apk update && 										\
 			apk add mysql mysql-client openrc
+#			mysql-server
 
-COPY		start.sh /project
+VOLUME 		[ "/sys/fs/cgroup" ]
+VOLUME		[ "/var/lib/mysql" ]
+
+COPY		start.sh /
 COPY		my.cnf /etc/mysql
-COPY		wordpress_db.sql /project
+COPY		wordpress_db.sql /etc
 
+#RUN			chown -R mysql:mysql /var/lib/mysql
 RUN			chmod +x start.sh
 
 EXPOSE		3306

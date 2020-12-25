@@ -1,8 +1,9 @@
-secretGenerator:
-- name: mysql-pass
-  literals:
-  - password=sadolph
+#secretGenerator:
+#- name: mysql-pass
+#  literals:
+#  - password=sadolph
 resources:
+#    - ./srcs/volumes.yaml
     - ./srcs/mysql/mysql.yaml
     - ./srcs/wordpress/wordpress.yaml
     - ./srcs/phpmyadmin/phpmyadmin.yaml
