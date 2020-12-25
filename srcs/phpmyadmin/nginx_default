@@ -1,9 +1,9 @@
 error_log                       /var/log/nginx/error.log warn;
 
 server {
-	listen 5050;
+	listen 5000;
 
-	root /lol;
+	root /www;
 	index index.php;
 
 	location / {

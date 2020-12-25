@@ -25,14 +25,14 @@ RUN			apk update && apk upgrade &&									\
 			php7-ldap php7-ctype php7-dom php7-fpm							\
 			openrc
 
-RUN			mkdir www
+RUN			mkdir /lol
 RUN			wget http://wordpress.org/latest.tar.gz
 RUN			tar -xzvf latest.tar.gz
 RUN			rm latest.tar.gz
-RUN			mv wordpress /www
+RUN			mv wordpress /lol
 
-RUN			chgrp -R root /www
-RUN			chmod -R 775 /www
+RUN			chgrp -R root /lol
+RUN			chmod -R 775 /lol
 RUN			mkdir -p /run/nginx
 RUN			chmod -R 775 /run/nginx
 

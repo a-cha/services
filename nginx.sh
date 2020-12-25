@@ -8,13 +8,15 @@ then
 	kubectl delete svc nginx-service
 fi
 
-if [[ $(kubectl get pods | grep "nginx-deployment" | awk '{ print $2 }') != "1/1" ]] || [[ $1 == 'force' ]]
+if [[ $2 == 'all' ]]
 then
-	docker build -t nginx_image srcs/nginx
-	kubectl apply -f srcs/nginx/nginx.yaml
+  docker rmi -f nginx_image
 fi
 
-if [[ $1 != 'd' ]] && [[ $2 != 'd' ]]
+docker build -t nginx_image srcs/nginx
+kubectl apply -f srcs/nginx/nginx.yaml
+
+if [[ $1 != 'd' ]] && [[ $2 != 'd' ]] && [[ $3 != 'd' ]]
 then
 	minikube dashboard
 fi

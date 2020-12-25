@@ -22,12 +22,12 @@ metadata:
     app: mysql
 spec:
   capacity:
-    storage: 50Mi
+    storage: 100Mi
   accessModes:
     - ReadWriteOnce
-  storageClassName: manuam
+  storageClassName: manual
   hostPath:
-    path: "/data"
+    path: "var/lib/data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -40,7 +40,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
