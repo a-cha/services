@@ -34,13 +34,17 @@ RUN			mv wordpress /lol
 RUN			chgrp -R root /lol
 RUN			chmod -R 775 /lol
 RUN			mkdir -p /run/nginx
-RUN			chmod -R 775 /run/nginx
+#RUN			chmod -R 775 /run/nginx
 
+#COPY		nginx_default /etc/nginx/nginx.conf
 COPY		nginx_default /etc/nginx/conf.d/default.conf
-COPY		wp-config.php /var/www/html/wp-config.php
+COPY		wp-config.php /lol/wordpress/wp-config.php
+COPY		supervisord.conf /etc/supervisord.conf
 
 EXPOSE		5050
 
-COPY		start.sh /
-RUN			chmod +x /start.sh
-CMD			/start.sh
+ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+
+#COPY		start.sh /
+#RUN			chmod +x /start.sh
+#CMD			/start.sh
