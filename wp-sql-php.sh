@@ -23,8 +23,8 @@ then
   docker rmi -f wordpress_image
 fi
 
-docker build -t mysql_image ./rus/srcs/mysql
-#docker build -t mysql_image srcs/mysql
+#docker build -t mysql_image ./rus/srcs/mysql
+docker build -t mysql_image srcs/mysql
 docker build -t php_image srcs/phpmyadmin
 docker build -t wordpress_image srcs/wordpress
 kubectl apply -k ./
