@@ -17,20 +17,25 @@ WORKDIR		/project
 
 RUN			apk update && apk upgrade && apk add php7 php7-fpm php7-opcache \
 			php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session \
-			--no-cache nginx php7-fpm
+			--no-cache nginx php7-fpm supervisor
 
 RUN			wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			rm phpMyAdmin-5.0.2-all-languages.tar.gz
+RUN			mkdir -p /www
 RUN			mv phpMyAdmin-5.0.2-all-languages /www
+RUN			chmod -R 775 /www
 
 RUN			mkdir -p /run/nginx
+RUN			touch /run/nginx/nginx.pid
 RUN			chmod -R 775 /run/nginx
+RUN			touch /project/project.log
 
+#COPY		nginx_default /etc/nginx/nginx.conf
 COPY		nginx_default /etc/nginx/conf.d/default.conf
-RUN			mkdir -p /www
-COPY		config.inc.php /www/
+RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
+COPY		config.inc.php /www/phpMyAdmin-5.0.2-all-languages/
 
 EXPOSE		5000
 

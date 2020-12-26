@@ -23,7 +23,7 @@ RUN			apk update && apk upgrade &&									\
 			php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql 	\
 			php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext 		\
 			php7-ldap php7-ctype php7-dom php7-fpm							\
-			openrc
+			supervisor
 
 RUN			mkdir /lol
 RUN			wget http://wordpress.org/latest.tar.gz
@@ -39,7 +39,7 @@ RUN			mkdir -p /run/nginx
 #COPY		nginx_default /etc/nginx/nginx.conf
 COPY		nginx_default /etc/nginx/conf.d/default.conf
 COPY		wp-config.php /lol/wordpress/wp-config.php
-COPY		supervisord.conf /etc/supervisord.conf
+COPY		supervisor.conf /etc/supervisord.conf
 
 EXPOSE		5050
 

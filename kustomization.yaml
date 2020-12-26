@@ -4,6 +4,7 @@
 #  - password=sadolph
 resources:
 #    - ./srcs/volumes.yaml
-    - ./srcs/mysql/mysql.yaml
+    - ./rus/srcs/mysql-deployment.yaml
+#    - ./srcs/mysql/mysql.yaml
     - ./srcs/wordpress/wordpress.yaml
     - ./srcs/phpmyadmin/phpmyadmin.yaml
