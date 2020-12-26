@@ -3,8 +3,8 @@ error_log                       /var/log/nginx/error.log warn;
 server {
 	listen 5050;
 
-	root /lol/wordpress;
-	index index.php;
+	root /www/wordpress;
+	index index.php index.html index.htm;
 
 	location / {
 	#	try_files $uri $uri/ =404;
@@ -17,6 +17,8 @@ server {
 	#	fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
 		fastcgi_index index.php;
 	#	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include fastcgi.conf;
+	#	include /etc/nginx/fastcgi.conf;
+	#	include fastcgi.conf;
+		include fastcgi_params;
 	}
 }

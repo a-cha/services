@@ -15,16 +15,17 @@ LABEL		maintainer="sadolph"
 
 WORKDIR		/project
 
-RUN			apk update && apk upgrade && apk add php7 php7-fpm php7-opcache \
-			php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session \
-			--no-cache nginx php7-fpm supervisor
+RUN			apk update && apk upgrade && apk add 						\
+			php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib 	\
+			php7-curl php7-mbstring php7-json php7-session 				\
+			--no-cache nginx											\
+			supervisor
 
 RUN			wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			rm phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN			mkdir -p /www
 RUN			mv phpMyAdmin-5.0.2-all-languages /www
-RUN			chmod -R 775 /www
 
 RUN			mkdir -p /run/nginx
 RUN			touch /run/nginx/nginx.pid
@@ -36,6 +37,8 @@ COPY		nginx_default /etc/nginx/conf.d/default.conf
 RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
 COPY		config.inc.php /www/phpMyAdmin-5.0.2-all-languages/
+
+RUN			chmod -R 775 /www
 
 EXPOSE		5000
 
