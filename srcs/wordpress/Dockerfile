@@ -15,6 +15,7 @@ LABEL		maintainer="sadolph"
 
 #USER		root
 WORKDIR		/project
+#RUN			adduser -D -g 'www' www
 
 RUN			apk update && apk upgrade && apk add							\
 			php7-common php7-iconv php7-json php7-gd php7-curl php7-xml 	\
@@ -24,26 +25,40 @@ RUN			apk update && apk upgrade && apk add							\
  			--no-cache nginx												\
 			supervisor
 
-RUN			wget http://wordpress.org/latest.tar.gz
-RUN			tar -xzvf latest.tar.gz
-RUN			rm latest.tar.gz
-RUN			mkdir -p /www
-RUN			mv wordpress /www
+RUN			wget https://wordpress.org/wordpress-5.5.3.tar.gz
+RUN			tar -xzvf wordpress-5.5.3.tar.gz
+RUN			rm wordpress-5.5.3.tar.gz
+#RUN			wget http://wordpress.org/latest.tar.gz
+#RUN			tar -xzvf latest.tar.gz
+#RUN			rm latest.tar.gz
+
+#RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
+#RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
+
+RUN			mkdir -p /var/www
+RUN			mv wordpress /var/www
 
 RUN			mkdir -p /run/nginx
-RUN			touch /run/nginx/nginx.pid
-RUN			chmod -R 775 /run/nginx
-RUN			touch /project/project.log
-#RUN			chgrp -R root /www
+#RUN			touch /run/nginx/nginx.pid
+
+#RUN			chmod -R 775 /run/nginx
+#RUN			touch /project/project.log
+#RUN			chgrp -R root /var/www
 #RUN			chmod -R 775 /run/nginx
 
+#RUN			chown -R www:www /var/lib/nginx
+#RUN			chown -R www:www /var/www
+
+RUN			rm -f /etc/nginx/nginx.conf
+RUN			rm -f /etc/nginx/conf.d/default.conf
 COPY		nginx_default /etc/nginx/nginx.conf
 #COPY		nginx_default /etc/nginx/conf.d/default.conf
 RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
-COPY		wp-config.php /www/wordpress/
+RUN			rm -rf /var/www/wordpress/wp-config-sample.php
+COPY		wp-config.php /var/www/wordpress/
 
-RUN			chmod -R 755 /www
+#RUN			chmod -R 755 /var/www/
 
 EXPOSE		5050
 

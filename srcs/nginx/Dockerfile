@@ -31,6 +31,7 @@ RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
 			-subj "/C=RU/ST=Russia/L=Kazan/O=School21/OU=4th Wave/CN=sadolph"
 
 EXPOSE		80 443 22
+
 RUN			chmod 755 start.sh
 RUN			mkdir -p /run/nginx
 #RUN			ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf

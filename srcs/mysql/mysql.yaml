@@ -25,8 +25,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    #    path: "/var/lib/mysql"
-    path: "/data"
+        path: "/var/lib/mysql"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

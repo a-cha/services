@@ -29,13 +29,13 @@ define( 'DB_USER', 'admin' );
 define( 'DB_PASSWORD', 'admin' );
 
 /** MySQL hostname */
-define( 'DB_HOST', 'mysql-service:3306' );
+define( 'DB_HOST', 'mysql-service' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
 /** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+define( 'DB_COLLATE', 'utf8mb4_unicode_ci' );
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -49,14 +49,14 @@ define( 'DB_COLLATE', '' );
 
 
 
-define('AUTH_KEY',         '');
-define('SECURE_AUTH_KEY',  '');
-define('LOGGED_IN_KEY',    '');
-define('NONCE_KEY',        '');
-define('AUTH_SALT',        '');
-define('SECURE_AUTH_SALT', '');
-define('LOGGED_IN_SALT',   '');
-define('NONCE_SALT',       '');
+define('AUTH_KEY',         'put your kek here');
+define('SECURE_AUTH_KEY',  'put your kek here');
+define('LOGGED_IN_KEY',    'put your kek here');
+define('NONCE_KEY',        'put your kek here');
+define('AUTH_SALT',        'put your kek here');
+define('SECURE_AUTH_SALT', 'put your kek here');
+define('LOGGED_IN_SALT',   'put your kek here');
+define('NONCE_SALT',       'put your kek here');
 
 /**
  * WordPress Database Table prefix.
