@@ -58,7 +58,7 @@ COPY		supervisor.conf /etc/supervisord.conf
 RUN			rm -rf /var/www/wordpress/wp-config-sample.php
 COPY		wp-config.php /var/www/wordpress/
 
-#RUN			chmod -R 755 /var/www/
+RUN			chmod -R 755 /var/www/
 
 EXPOSE		5050
 

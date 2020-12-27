@@ -10,7 +10,6 @@ then
 	minikube start --vm-driver=virtualbox
 	minikube addons enable metallb
 	kubectl apply -f srcs/configmap.yaml
-	eval $(minikube docker-env)
 	echo "Minikube launched"
 else
 	echo "Minikube is already running"
