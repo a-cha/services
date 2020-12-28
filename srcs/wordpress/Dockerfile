@@ -13,8 +13,8 @@
 FROM		alpine:latest
 LABEL		maintainer="sadolph"
 
-#USER		root
-WORKDIR		/project
+USER		root
+#WORKDIR		/project
 #RUN			adduser -D -g 'www' www
 
 RUN			apk update && apk upgrade && apk add							\
@@ -35,32 +35,32 @@ RUN			rm wordpress-5.5.3.tar.gz
 #RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
 #RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
 
-RUN			mkdir -p /var/www
-RUN			mv wordpress /var/www
+#RUN			mkdir -p /
+RUN			mv wordpress /
 
 RUN			mkdir -p /run/nginx
 #RUN			touch /run/nginx/nginx.pid
 
 #RUN			chmod -R 775 /run/nginx
 #RUN			touch /project/project.log
-#RUN			chgrp -R root /var/www
+#RUN			chgrp -R root /
 #RUN			chmod -R 775 /run/nginx
 
 #RUN			chown -R www:www /var/lib/nginx
-#RUN			chown -R www:www /var/www
+#RUN			chown -R www:www /
 
-RUN			rm -f /etc/nginx/nginx.conf
-RUN			rm -f /etc/nginx/conf.d/default.conf
-COPY		nginx_default /etc/nginx/nginx.conf
-#COPY		nginx_default /etc/nginx/conf.d/default.conf
-RUN			rm -f /etc/supervisord.conf
+#RUN			rm -f /etc/nginx/nginx.conf
+#RUN			rm -f /etc/nginx/conf.d/default.conf
+#COPY		nginx_default /etc/nginx/nginx.conf
+COPY		nginx_default /etc/nginx/conf.d/default.conf
+#RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
-RUN			rm -rf /var/www/wordpress/wp-config-sample.php
-COPY		wp-config.php /var/www/wordpress/
+#RUN			rm -rf /wordpress/wp-config-sample.php
+COPY		wp-config.php /wordpress/
 
-RUN			chmod -R 755 /var/www/
+#RUN			chmod -R 755 /
 
-EXPOSE		5050
+EXPOSE		80
 
 ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 

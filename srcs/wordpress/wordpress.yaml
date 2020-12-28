@@ -14,7 +14,7 @@ spec:
     - protocol: TCP
       name: wp
       port: 5050
-      targetPort: 5050
+      targetPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,8 +39,22 @@ spec:
         image: wordpress_image
         imagePullPolicy: Never
         ports:
-        - containerPort: 5050
+        - containerPort: 80
           name: wordpress
+#        livenessProbe:
+#          exec:
+#            command:
+#              - pgrep
+#              - nginx
+#          initialDelaySeconds: 10
+#          periodSeconds: 5
+#          exec:
+#            command:
+#              - pgrep
+#              - php-fpm7
+#          initialDelaySeconds: 10
+#          periodSeconds: 5
+
 #        volumeMounts:
 #        - name: wordpress-persistent-storage
 #          mountPath: /var/www/html
