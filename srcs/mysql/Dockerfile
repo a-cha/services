@@ -22,7 +22,12 @@ COPY		my.cnf /etc/mysql/
 COPY		init_db.sql /etc/
 COPY		wordpress_db.sql /etc/
 
+RUN			chown -R mysql /etc/mysql/
+
 EXPOSE		3306
+
+VOLUME		/sys/fs/cgroup
+VOLUME		/var/lib/mysql
 
 COPY		start.sh /
 RUN			chmod +x /start.sh

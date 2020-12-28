@@ -8,8 +8,9 @@ http {
 		index index.php;
 
 	location / {
-		try_files $uri $uri/ /index.php?$query_string;
+		index index.php;
 
+#		try_files $uri $uri/ /index.php?$query_string;
 #		try_files $uri $uri/ =404;
 #		try_files $uri $uri/ /index.php?$server_name;
 	}
