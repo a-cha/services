@@ -13,20 +13,24 @@
 FROM		alpine:latest
 LABEL		maintainer="sadolph"
 
-RUN			apk	update && apk upgrade && apk add
-#			grafana --repository http://dl-3.alpinelinux.org/alpine/edge/testing
-
-RUN			wget https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.linux-x64.tar.gz && \
-RUN			tar -xzf grafana-*linux-x64.tar.gz && \
+RUN			apk	update && apk upgrade
+RUN			apk add bash
 
 RUN			wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 RUN			wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk
 RUN			apk add glibc-2.32-r0.apk
 
+RUN			wget https://dl.grafana.com/enterprise/release/grafana-enterprise-7.3.6.linux-amd64.tar.gz
+RUN			tar -zxvf grafana-enterprise-7.3.6.linux-amd64.tar.gz
+RUN			rm -f grafana-enterprise-7.3.6.linux-amd64.tar.gz
+
 #COPY		boards.yaml /usr/share/grafana/conf/provisioning/dashboards/influxdb.yaml
 #COPY		sources.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
 
-#COPY		FT_SERVICE-1605816702189.json /var/lib/grafana/dashboards/
-#RUN			cd /usr/share/grafana
+WORKDIR		grafana-7.3.6
 
-#ENTRYPOINT	["/usr/sbin/grafana-server"]
+#COPY		FT_SERVICE-1605816702189.json /var/lib/grafana/dashboards/
+
+EXPOSE		3000
+
+ENTRYPOINT	["bin/grafana-server"]
