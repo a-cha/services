@@ -1,20 +1,24 @@
-# /bin/sh
+#! /bin/sh
 
 # FTPS
 
-if [[ $1 == 're' ]]
+eval "$(minikube docker-env)"
+
+if [ "$1" = 're' ]
 then
 	kubectl delete deploy ftps-deployment
 	kubectl delete svc ftps-service
 fi
 
-if [[ $(kubectl get pods | grep "ftps-deployment" | awk '{ print $2 }') != "1/1" ]] || [[ $1 == 'force' ]]
+if [ "$2" = 'all' ]
 then
-	docker build -t ftps_image srcs/ftps
-	kubectl apply -f srcs/ftps/ftps.yaml
+  docker rmi -f ftps_image
 fi
 
-if [[ $1 != 'd' ]] && [[ $2 != 'd' ]]
+docker build -t ftps_image srcs/ftps
+kubectl apply -f srcs/ftps/ftps.yaml
+
+if [ "$1" != 'd' ] && [ "$2" != 'd' ]
 then
 	minikube dashboard
 fi

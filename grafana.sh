@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# NGINX
+# GRAFANA
 
 eval $(minikube docker-env)
 
