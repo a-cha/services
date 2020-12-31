@@ -21,7 +21,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 100Mi
+    storage: 300Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -37,7 +37,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 300Mi
 ---
 apiVersion: apps/v1
 kind: Deployment

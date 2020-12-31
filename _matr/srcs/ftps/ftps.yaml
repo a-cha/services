@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  selector:
+    matchLabels:
+      app: ftps
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      containers:
+      - image: ftps:matrus
+        name: ftps
+        ports:
+        - containerPort: 21
+          name: ftps-port
+        - containerPort: 21000
+          name: ftps
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  ports:
+    - port: 21
+      name: ftps-port
+    - port: 21000
+      name: pasv-port
+  selector:
+    app: ftps
+  type: LoadBalancer
+  loadBalancerIP: 192.168.99.247

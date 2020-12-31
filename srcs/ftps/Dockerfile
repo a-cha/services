@@ -10,8 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-FROM		alpine:3.7
+FROM		alpine:latest
 LABEL		maintainer="sadolph"
+
+WORKDIR		/project
 
 RUN			apk update &&													\
 			apk add vsftpd													\
@@ -25,10 +27,12 @@ RUN			mkdir -p /var/log/ftp
 RUN			touch /var/log/ftp/xferlog.log
 
 RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
-			-keyout /etc/ssl/private/vsftpd.key 							\
-			-out /etc/ssl/certs/vsftpd.crt 									\
+			-keyout /etc/ssl/private/key.key 								\
+			-out /etc/ssl/certs/crt.crt 									\
 			-subj "/C=RU/ST=Russia/L=Kazan/O=School21/OU=4th Wave/CN=sadolph"
 
-EXPOSE		21
+EXPOSE		20 21
+RUN			chmod 755 start.sh
 
-ENTRYPOINT	["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+ENTRYPOINT	["/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
+#ENTRYPOINT	["vsftpd", "/etc/vsftpd/vsftpd.conf"]
