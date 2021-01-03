@@ -21,18 +21,22 @@ http {
 			autoindex on;
 			try_files $uri $uri/ =404;
 		}
+
 		location /wordpress {
-			return 307 http://192.168.99.100:5050;
+			return 307 http://$host:5050;
 		}
-	# вернемся к этому после подъема phpmyadmin
-		location /phpmyadmin {
-			rewrite /phpmyadmin/(.*)$ /$1 break;
+
+		location /phpmyadmin/ {
+			include  /etc/nginx/mime.types;
+			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-	#		rewrite ^/phpmyadmin(/.*)$ $1 break;
-	#		proxy_set_header X-Forwarded-For $remote_addr;
-	#		proxy_set_header X-Forwarded-Proto https;
-			proxy_pass http://192.168.99.100:5000;
+			rewrite ^/phpmyadmin(/.*)$ $1 break;
+			proxy_set_header X-Forwarded-For $remote_addr;
+			proxy_pass http://$host:5000;
+			proxy_set_header X-Forwarded-Proto https;
+		}
+		location /index.php {
+			return 301 http://$host/phpmyadmin/;
 		}
 
 	}
