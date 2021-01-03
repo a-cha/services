@@ -14,4 +14,3 @@ COPY matrus_services.key /etc/vsftpd/matrus_services.key
 EXPOSE 21
 
 CMD ["/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
-

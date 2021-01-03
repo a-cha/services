@@ -19,20 +19,15 @@ RUN			apk update &&													\
 			apk add vsftpd													\
 			openssl
 
-RUN			adduser -D sadolph
-RUN			echo "sadolph:sadolph" | chpasswd
-
 COPY		vsftpd.conf /etc/vsftpd/vsftpd.conf
-RUN			mkdir -p /var/log/ftp
-RUN			touch /var/log/ftp/xferlog.log
 
 RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
-			-keyout /etc/ssl/private/key.key 								\
-			-out /etc/ssl/certs/crt.crt 									\
+			-keyout /etc/ssl/private/vsftpd.key 							\
+			-out /etc/ssl/certs/vsftpd.pem 									\
 			-subj "/C=RU/ST=Russia/L=Kazan/O=School21/OU=4th Wave/CN=sadolph"
 
-EXPOSE		20 21
-RUN			chmod 755 start.sh
+RUN			echo 'root:root' | chpasswd
+
+EXPOSE		21 21000
 
 ENTRYPOINT	["/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
-#ENTRYPOINT	["vsftpd", "/etc/vsftpd/vsftpd.conf"]

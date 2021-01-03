@@ -15,7 +15,10 @@ then
   docker rmi -f ftps_image
 fi
 
+#docker build -t ftps_image _wel/srcs/ftps
 docker build -t ftps_image srcs/ftps
+
+#kubectl apply -f _wel/srcs/ftps/ftps.yaml
 kubectl apply -f srcs/ftps/ftps.yaml
 
 if [ "$1" != 'd' ] && [ "$2" != 'd' ]

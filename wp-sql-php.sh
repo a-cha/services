@@ -30,8 +30,8 @@ fi
 docker build -t mysql_image srcs/mysql
 docker build -t php_image srcs/phpmyadmin
 #docker build -t wordpress_image matr/srcs/wordpress
-docker build -t wordpress_image rus/srcs/wordpress
-#docker build -t wordpress_image srcs/wordpress
+#docker build -t wordpress_image rus/srcs/wordpress
+docker build -t wordpress_image srcs/wordpress
 
 kubectl apply -k ./
 
