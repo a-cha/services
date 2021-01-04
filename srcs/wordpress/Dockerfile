@@ -13,9 +13,8 @@
 FROM		alpine:latest
 LABEL		maintainer="sadolph"
 
-USER		root
 #WORKDIR		/project
-#RUN			adduser -D -g 'www' www
+RUN			adduser -D -g 'www' www
 
 RUN			apk update && apk upgrade && apk add							\
 			php7-common php7-iconv php7-json php7-gd php7-curl php7-xml 	\
@@ -31,12 +30,12 @@ RUN			rm wordpress-5.5.3.tar.gz
 #RUN			wget http://wordpress.org/latest.tar.gz
 #RUN			tar -xzvf latest.tar.gz
 #RUN			rm latest.tar.gz
+RUN			mv wordpress /
 
 #RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
 #RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
 
-#RUN			mkdir -p /
-RUN			mv wordpress /
+#RUN			mkdir -p /www/
 
 RUN			mkdir -p /run/nginx
 #RUN			touch /run/nginx/nginx.pid
