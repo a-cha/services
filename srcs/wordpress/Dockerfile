@@ -24,21 +24,25 @@ RUN			apk update && apk upgrade && apk add							\
  			--no-cache nginx												\
 			supervisor
 
-RUN			wget https://wordpress.org/wordpress-5.5.3.tar.gz
-RUN			tar -xzvf wordpress-5.5.3.tar.gz
-RUN			rm wordpress-5.5.3.tar.gz
-#RUN			wget http://wordpress.org/latest.tar.gz
-#RUN			tar -xzvf latest.tar.gz
-#RUN			rm latest.tar.gz
-RUN			mv wordpress /
+#RUN			wget https://wordpress.org/wordpress-5.5.3.tar.gz
+#RUN			tar -xzvf wordpress-5.5.3.tar.gz
+#RUN			rm wordpress-5.5.3.tar.gz
+RUN			wget http://wordpress.org/latest.tar.gz
+RUN			tar -xzvf latest.tar.gz
+RUN			rm latest.tar.gz
+RUN			mkdir -p /www
+RUN			mv wordpress /www
 
 #RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
 #RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
 
-#RUN			mkdir -p /www/
-
+RUN		chown -R www:www /www
 RUN			mkdir -p /run/nginx
-#RUN			touch /run/nginx/nginx.pid
+RUN		chown -R www:www /var/lib/nginx
+
+RUN mkdir -p /var/run/nginx
+RUN mkdir -p /var/run/php
+RUN			touch /run/nginx/nginx.pid
 
 #RUN			chmod -R 775 /run/nginx
 #RUN			touch /project/project.log
@@ -49,17 +53,16 @@ RUN			mkdir -p /run/nginx
 #RUN			chown -R www:www /
 
 #RUN			rm -f /etc/nginx/nginx.conf
-#RUN			rm -f /etc/nginx/conf.d/default.conf
-#COPY		nginx_default /etc/nginx/nginx.conf
-COPY		nginx_default /etc/nginx/conf.d/default.conf
-#RUN			rm -f /etc/supervisord.conf
+RUN			rm -f /etc/nginx/conf.d/default.conf
+COPY		nginx_conf /etc/nginx/nginx.conf
+#COPY		nginx_conf /etc/nginx/conf.d/default.conf
 COPY		supervisor.conf /etc/supervisord.conf
 #RUN			rm -rf /wordpress/wp-config-sample.php
-COPY		wp-config.php /wordpress/
+COPY		wp-config.php /www/wordpress/
 
 #RUN			chmod -R 755 /
 
-EXPOSE		80
+EXPOSE		5050
 
 ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 

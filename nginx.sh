@@ -2,6 +2,8 @@
 
 # NGINX
 
+eval $(minikube docker-env)
+
 if [[ $1 == 're' ]]
 then
 	kubectl delete deploy nginx-deployment

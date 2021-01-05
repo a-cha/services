@@ -1,9 +1,11 @@
 FROM alpine:latest
 
 RUN apk update && apk upgrade
-RUN apk add nginx wget supervisor mysql mysql-client openrc php7 php7-fpm php7-opcache \
+RUN apk add nginx wget supervisor mysql mysql-client openrc \
+											php7 php7-fpm php7-opcache \
                                             php7-gd php7-mysqli php7-zlib php7-curl \
                                             php7-mbstring php7-json php7-session
+
 RUN adduser -D -g 'www' www
 RUN rc-update add php-fpm7 default
 RUN		mkdir /www

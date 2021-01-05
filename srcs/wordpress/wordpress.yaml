@@ -14,7 +14,7 @@ spec:
     - protocol: TCP
       name: wp
       port: 5050
-      targetPort: 80
+      targetPort: 5050
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,8 +27,8 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-  #strategy:
-   # type: Recreate
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -39,39 +39,5 @@ spec:
         image: wordpress_image
         imagePullPolicy: Never
         ports:
-        - containerPort: 80
+        - containerPort: 5050
           name: wordpress
-#        livenessProbe:
-#          exec:
-#            command:
-#              - pgrep
-#              - nginx
-#          initialDelaySeconds: 10
-#          periodSeconds: 5
-#          exec:
-#            command:
-#              - pgrep
-#              - php-fpm7
-#          initialDelaySeconds: 10
-#          periodSeconds: 5
-
-#        volumeMounts:
-#        - name: wordpress-persistent-storage
-#          mountPath: /var/www/html
-#      volumes:
-#      - name: wordpress-persistent-storage
-#        persistentVolumeClaim:
-#          claimName: wp-pv-claim
-#---
-#apiVersion: v1
-#kind: PersistentVolumeClaim
-#metadata:
-#  name: wp-pv-claim
-#  labels:
-#    app: wordpress
-#spec:
-#  accessModes:
-#    - ReadWriteOnce
-#  resources:
-#    requests:
-#      storage: 50Mi

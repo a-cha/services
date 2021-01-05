@@ -37,6 +37,7 @@ COPY		nginx_default /etc/nginx/conf.d/default.conf
 RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
 COPY		config.inc.php /www/phpMyAdmin-5.0.2-all-languages/
+RUN			mkdir -p /www/phpMyAdmin-5.0.2-all-languages/tmp/
 
 RUN			chmod -R 775 /www
 

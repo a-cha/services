@@ -38,7 +38,6 @@ http {
 
 	}
 }
-
 events {
 
 }
