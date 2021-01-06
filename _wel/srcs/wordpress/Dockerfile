@@ -20,8 +20,8 @@ COPY localhost.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 COPY wp-config.php /var/www/wordpress/wp-config.php
 
-RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
-RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
+#RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
+#RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
 
 
 RUN wget https://wordpress.org/latest.tar.gz

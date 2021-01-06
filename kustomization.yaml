@@ -6,9 +6,12 @@ resources:
 #    - ./srcs/volumes.yaml
 
 #    - ./_rus/srcs/mysql-deployment.yaml
-    - ./srcs/mysql/mysql.yaml
-    #    - ./matr/srcs/wordpress/wordpress.yaml
+#    - ./_wel/srcs/mysql/mysql-deployment.yaml
+#    - ./srcs/mysql/mysql.yaml
+
+#    - ./matr/srcs/wordpress/wordpress.yaml
 #    - ./_rus/srcs/wordpress-deployment.yaml
-    - ./_wel/srcs/wordpress/wordpress-deployment.yaml
-#    - ./srcs/wordpress/wordpress.yaml
-    - ./srcs/phpmyadmin/phpmyadmin.yaml
+#    - ./_wel/srcs/wordpress/wordpress-deployment.yaml
+    - ./srcs/wordpress/wordpress.yaml
+
+#    - ./srcs/phpmyadmin/phpmyadmin.yaml
