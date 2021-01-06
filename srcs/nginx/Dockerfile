@@ -22,8 +22,8 @@ RUN			apk update &&													\
 			supervisor
 
 COPY		nginx_default /etc/nginx/nginx.conf
-COPY		start.sh /project/
 COPY		supervisor.conf /etc/supervisord.conf
+COPY		index.html /
 
 RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
 			-keyout /etc/ssl/certs/localhost.key 							\
@@ -32,8 +32,9 @@ RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
 
 EXPOSE		80 443 22
 
-RUN			chmod 755 start.sh
 RUN			mkdir -p /run/nginx
 #RUN			ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf
+COPY		start.sh /project/
+RUN			chmod 755 start.sh
 
 ENTRYPOINT	sh start.sh

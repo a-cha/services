@@ -11,6 +11,9 @@ http {
 		listen 443 ssl;
 		listen [::]:443 ssl;
 		
+		root /;
+		index index.html;
+
         access_log			/var/log/nginx/reverse-access.log;
         error_log			/var/log/nginx/reverse-error.log;
 
