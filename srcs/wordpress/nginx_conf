@@ -1,33 +1,25 @@
-error_log		/var/log/nginx/error.log warn;
-#include		/etc/nginx/modules/*.conf;
+server {
+		listen 5050;
+		listen	[::]:5050;
 
-http {
-	include /etc/nginx/mime.types;
-	server_tokens off;
+		root /var/www/wordpress;
 
-	server {
-			listen 5050;
-
-			root /www/wordpress;
-
-			index   index.php;
-	#       index.html index.htm;
+		index   index.php index.html index.htm;
 
 
-			location "/" {
-					try_files       $uri $uri/ =404;
-			}
+		location / {
+				try_files       $uri $uri/ =404;
+				include  /etc/nginx/mime.types;
+		}
 
-			location ~\.php$ {
-	                include fastcgi_params;
-	                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-					fastcgi_pass localhost:9000;
-					fastcgi_index   index.php;
-					include /etc/nginx/fastcgi.conf;
-			}
-	}
-}
 
-events {
-        worker_connections 1024;
+		location ~\.php$ {
+				include fastcgi_params;
+				fastcgi_pass localhost:9000;
+				fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+				fastcgi_param PATH_INFO $fastcgi_path_info;
+				fastcgi_index   index.php;
+				include /etc/nginx/fastcgi.conf;
+		}
+
 }
