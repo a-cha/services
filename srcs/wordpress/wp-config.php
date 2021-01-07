@@ -17,6 +17,7 @@
  *
  * @package WordPress
  */
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'wordpress' );
@@ -45,17 +46,16 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
+define( 'AUTH_KEY',         'put your kek here' );
+define( 'SECURE_AUTH_KEY',  'put your kek here' );
+define( 'LOGGED_IN_KEY',    'put your kek here' );
+define( 'NONCE_KEY',        'put your kek here' );
+define( 'AUTH_SALT',        'put your kek here' );
+define( 'SECURE_AUTH_SALT', 'put your kek here' );
+define( 'LOGGED_IN_SALT',   'put your kek here' );
+define( 'NONCE_SALT',       'put your kek here' );
 
-
-
-define('AUTH_KEY',         'put your kek here');
-define('SECURE_AUTH_KEY',  'put your kek here');
-define('LOGGED_IN_KEY',    'put your kek here');
-define('NONCE_KEY',        'put your kek here');
-define('AUTH_SALT',        'put your kek here');
-define('SECURE_AUTH_SALT', 'put your kek here');
-define('LOGGED_IN_SALT',   'put your kek here');
-define('NONCE_SALT',       'put your kek here');
+/**#@-*/
 
 /**
  * WordPress Database Table prefix.
@@ -83,7 +83,7 @@ define( 'WP_DEBUG', false );
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
+        define( 'ABSPATH', __DIR__ . '/' );
 }
 
 /** Sets up WordPress vars and included files. */
