@@ -19,7 +19,7 @@ then
   kubectl delete pvc --all
   kubectl delete pv --all
   docker rmi -f mysql_image
-#  docker rmi -f php_image
+  docker rmi -f php_image
   docker rmi -f wordpress_image
 fi
 
@@ -27,13 +27,13 @@ fi
 #docker build -t php_image ./_wel/srcs/php
 
 #docker build -t mysql_image ./_rus/srcs/mysql
-#docker build -t mysql_image ./_wel/srcs/mysql
-# docker build -t mysql_image srcs/mysql
+#docker build -t mysql_image _wel/srcs/mysql
+#docker build -t mysql_image srcs/mysql
 
 #docker build -t wordpress_image _matr/srcs/wordpress
 #docker build -t wordpress_image _rus/srcs/wordpress
 #docker build -t wordpress_image _wel/srcs/wordpress
- docker build -t wordpress_image srcs/wordpress
+docker build -t wordpress_image srcs/wordpress
 
 kubectl apply -k ./
 

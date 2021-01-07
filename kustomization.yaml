@@ -6,6 +6,7 @@ resources:
 #    - ./srcs/volumes.yaml
 
 #    - ./_rus/srcs/mysql-deployment.yaml
+#    - ./_wel/srcs/volume.yaml
 #    - ./_wel/srcs/mysql/mysql-deployment.yaml
 #    - ./srcs/mysql/mysql.yaml
 

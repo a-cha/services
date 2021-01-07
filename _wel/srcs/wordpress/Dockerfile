@@ -1,33 +1,53 @@
-FROM alpine:latest
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sadolph <marvin@42.fr>                     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/11/01 22:22:38 by sadolph           #+#    #+#              #
+#    Updated: 2020/11/04 23:05:24 by sadolph          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-RUN apk update && apk upgrade
-RUN apk add nginx wget supervisor mysql mysql-client openrc \
-											php7 php7-fpm php7-opcache \
-                                            php7-gd php7-mysqli php7-zlib php7-curl \
-                                            php7-mbstring php7-json php7-session
+FROM		alpine:latest
+LABEL		maintainer="sadolph"
 
-RUN adduser -D -g 'www' www
-RUN rc-update add php-fpm7 default
-RUN		mkdir /www
-RUN		chown -R www:www /var/lib/nginx
-RUN		chown -R www:www /www
-RUN     rm -rf /etc/nginx/conf.d/default.conf
-RUN mkdir -p /var/run/nginx
-RUN mkdir -p /var/run/php
-RUN touch /var/run/nginx/nginx.pid
+RUN			adduser -D -g 'www' www
 
-COPY localhost.conf /etc/nginx/nginx.conf
-COPY supervisord.conf /etc/supervisord.conf
-COPY wp-config.php /var/www/wordpress/wp-config.php
+RUN			apk update && apk upgrade && apk add					\
+ 			php7													\
+ 			php7-fpm												\
+ 			php7-opcache											\
+			php7-gd													\
+			php7-mysqli												\
+			php7-zlib												\
+			php7-curl												\
+			php7-mbstring											\
+			php7-json												\
+			php7-session											\
+ 			--no-cache nginx 										\
+ 			supervisor												\
+ 			openrc
 
-#RUN	sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
-#RUN	sed -it 's/;   extension=mysql.so/extension=mysql.so/g' /etc/php7/php.ini
+RUN			wget https://wordpress.org/latest.tar.gz
+RUN			tar -xzvf latest.tar.gz
+RUN			rm -rf latest.tar.gz
+RUN			mv wordpress /var/www
 
+RUN			mkdir /www
+RUN			chown -R www:www /www
+RUN			chown -R www:www /var/lib/nginx
+RUN			mkdir -p /var/run/php
+RUN			mkdir -p /var/run/nginx
+RUN			touch /var/run/nginx/nginx.pid
 
-RUN wget https://wordpress.org/latest.tar.gz
-RUN tar -xzvf latest.tar.gz -C /var/www/
-RUN rm -rf latest.tar.gz
+#COPY		localhost.conf /etc/nginx/nginx.conf
+RUN			rm -rf /etc/nginx/conf.d/default.conf
+COPY		nginx_default /etc/nginx/conf.d/default.conf
+COPY		supervisord.conf /etc/supervisord.conf
+COPY		wp-config.php /var/www/wordpress/wp-config.php
 
-EXPOSE 5050
+EXPOSE		5050
 
-CMD ["usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
