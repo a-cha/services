@@ -21,6 +21,8 @@ RUN			apk update &&													\
 			openssh															\
 			supervisor
 
+RUN			mkdir -p /run/nginx
+RUN			rm -f /etc/nginx/nginx.conf
 COPY		nginx_default /etc/nginx/nginx.conf
 COPY		supervisor.conf /etc/supervisord.conf
 COPY		index.html /
@@ -30,11 +32,10 @@ RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
 			-out /etc/ssl/certs/localhost.crt 								\
 			-subj "/C=RU/ST=Russia/L=Kazan/O=School21/OU=4th Wave/CN=sadolph"
 
+RUN			adduser -D sad
+RUN			echo "sad:sad" | chpasswd
+RUN			ssh-keygen -A
+
 EXPOSE		80 443 22
 
-RUN			mkdir -p /run/nginx
-#RUN			ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf
-COPY		start.sh /project/
-RUN			chmod 755 start.sh
-
-ENTRYPOINT	sh start.sh
+ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
