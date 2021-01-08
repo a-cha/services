@@ -1,0 +1,14 @@
+#secretGenerator:
+#- name: mysql-pass
+#  literals:
+#  - password=sadolph
+resources:
+    - configmap.yaml
+    - volumes.yaml
+    - mysql/mysql.yaml
+    - phpmyadmin/phpmyadmin.yaml
+    - wordpress/wordpress.yaml
+    - ftps/ftps.yaml
+    - nginx/nginx.yaml
+    - grafana/grafana.yaml
+#    - ./srcs/influxdb/influx.yaml

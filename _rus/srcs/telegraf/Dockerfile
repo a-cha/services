@@ -13,3 +13,4 @@ COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 COPY ./start.sh /
 RUN chmod +x /start.sh
 CMD ./start.sh
+#telegraf

@@ -1,21 +1,6 @@
-WP
-wp-config:
-username and pass for mysql (into mysql I skip the pass)
-mysql hostname
-
-SQL
-without it's own yaml? (new subj)
-
-PHP
-config.inc:
-Set valid Server parameters
-
-FTPS
-
-
-
-
-
+Протестировать работу ssh:
+	ssh sad@$192.168.99.101 -p 22
+	rm -f /Users/sadolph/.ssh/known_hosts
 
 
 
@@ -86,8 +71,6 @@ FTPS
 	kubectl exec -ti $POD_NAME bash
 Создать деплой:
 	kubectl create deployment deployname
-Протестировать работу ssh:
-	ssh sadolph@$(minikube ip) -p 22
 Скопировать файл из контейнера в выбранную директорию на компе
 	docker cp mysql:/etc/mysql .
 Удалить ненужные образы
