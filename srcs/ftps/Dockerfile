@@ -13,8 +13,6 @@
 FROM		alpine:3.7
 LABEL		maintainer="sadolph"
 
-WORKDIR		/project
-
 RUN			apk update && apk add											\
 			vsftpd															\
 			openssl
@@ -29,6 +27,6 @@ RUN			openssl req -x509 -nodes -days 365 -newkey rsa:2048 			\
 RUN			adduser -D lol
 RUN			echo 'lol:lol' | chpasswd
 
-EXPOSE		21
+EXPOSE		21 21000
 
 ENTRYPOINT	vsftpd /etc/vsftpd/vsftpd.conf

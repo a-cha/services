@@ -11,4 +11,4 @@ resources:
     - ftps/ftps.yaml
     - nginx/nginx.yaml
     - grafana/grafana.yaml
-#    - ./srcs/influxdb/influx.yaml
+    - influxdb/influxdb.yaml
