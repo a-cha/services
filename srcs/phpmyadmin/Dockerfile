@@ -32,19 +32,13 @@ RUN			touch /run/nginx/nginx.pid
 RUN			chmod -R 775 /run/nginx
 RUN			touch /project/project.log
 
-#COPY		nginx_default /etc/nginx/nginx.conf
 COPY		nginx_default /etc/nginx/conf.d/default.conf
 RUN			rm -f /etc/supervisord.conf
 COPY		supervisor.conf /etc/supervisord.conf
 COPY		config.inc.php /www/phpMyAdmin-5.0.2-all-languages/
-RUN			mkdir -p /www/phpMyAdmin-5.0.2-all-languages/tmp/
 
-RUN			chmod -R 775 /www
+RUN			chmod -R 755 /www
 
 EXPOSE		5000
 
 ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-#ENTRYPOINT	["php", "-S", "0.0.0.0:5000", "-t", "/www/"]
-#COPY		start.sh /
-#RUN			chmod +x /start.sh
-#CMD			/start.sh
