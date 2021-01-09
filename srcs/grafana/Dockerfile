@@ -26,9 +26,10 @@ RUN			rm -f grafana-enterprise-7.3.6.linux-amd64.tar.gz
 COPY		boards.yaml /usr/share/grafana/conf/provisioning/dashboards/influxdb.yaml
 COPY		sources.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
 
-WORKDIR		grafana-7.3.6
+RUN			rm -f /grafana-7.3.6/data/grafana.db
+COPY		grafana.db /grafana-7.3.6/data/
 
-#COPY		FT_SERVICE-1605816702189.json /var/lib/grafana/dashboards/
+WORKDIR		grafana-7.3.6
 
 EXPOSE		3000
 
