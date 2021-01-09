@@ -57,14 +57,14 @@ if [ "$1" = 're' ] && [ "$2" != 'kube' ]
 then
   printf "$RED$BOLD%s %s" "$2" "configuration removed"
   echo "$STD"
-  kubectl delete deploy "$2"-deployment &>/dev/null
-  kubectl delete svc "$2"-service &>/dev/null
+  kubectl delete deploy "$2"-deployment >/dev/null 2>&1
+  kubectl delete svc "$2"-service >/dev/null 2>&1
   if [ "$2" = 'mysql' ] || [ "$2" = 'influxdb' ]
   then
     printf "$RED$BOLD%s %s %s" "Removing" "$2" "volume..."
     echo "$STD"
-    kubectl delete pvc "$2"-pvc &>/dev/null
-    kubectl delete pv "$2"-pv &>/dev/null
+    kubectl delete pvc "$2"-pvc >/dev/null 2>&1
+    kubectl delete pv "$2"-pv >/dev/null 2>&1
   fi
 fi
 
@@ -88,5 +88,5 @@ if [ "$3" != 'd' ] && [ "$2" != 'd' ] && [ "$1" != 'd' ]
 then
   echo ''
   Print_message "$RED" "Launching dashboard 🚀🚀🚀"
-	minikube dashboard &>/dev/null
+	minikube dashboard >/dev/null 2>&1
 fi
