@@ -2,115 +2,100 @@
 
 GREEN="\e[0;32m"
 PURPLE="\033[35m"
+RED="\033[31m"
 BLUE='\033[36m'
 BOLD="\033[1m"
 STD="\033[0m"
 
+# FUNCTIONS FOR PRINTING MESSAGES
 Kube_message() {
-  printf "$1$BOLD%s\n" "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-  printf "@ %s @\n" "$2"
-  printf "%s$STD\n" "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-  sleep 1
-}
-
-Img_message() {
-  printf "$PURPLE$BOLD%s" "Starting to build images"
-  sleep 1
-  printf .
-  sleep 1
-  printf .
-  sleep 1
-  printf .
+  printf "$1$BOLD%s" "$2"
   echo "$STD"
 }
 
+Build_message() {
+  printf "$BOLD%s$PURPLE %s$STD$BOLD %s" "Building" "$1" "image..."
+  echo "$STD"
+}
+
+# REMOVE LOGS
+SERVICE_LIST="nginx mysql phpmyadmin wordpress ftps grafana"
+if [ "$1" = "clean" ]
+then
+  rm -f srcs/kustomization_log
+  for SERVICE in $SERVICE_LIST
+  do
+    rm -f srcs/"$SERVICE"/build_log
+  done
+  printf "$GREEN$BOLD%s\n" "All logs was deleted ✅"
+  exit
+fi
+
+# RUN MINIKUBE
 if [ "$1" = 're' ] && [ "$2" = 'kube' ]
 then
-  minikube delete
+  printf "$RED$BOLD%s" "Deleting minikube"
+  echo "$STD"
+  minikube delete > /dev/null
 fi
 
-if [ "$(minikube status | grep -c "Running")" = 0 ] || [ "$1" = 'force' ]
+if [ "$(minikube status | grep -c "Running")" = 0 ]
 then
-	minikube start --vm-driver=virtualbox
-	minikube addons enable metallb
-  kubectl apply -f srcs/configmap.yaml
-  Kube_message "$GREEN" "         Minikube launched 😎😎😎        "
-  Img_message
+  printf "$BOLD%s" "Trying to start minikube..."
+  echo "$STD"
+	{ minikube start --vm-driver=virtualbox > srcs/minikube_log ; } 2>&1
+	{ minikube addons enable metallb >> srcs/minikube_log ; } 2>&1
+  { kubectl apply -f srcs/configmap.yaml >> srcs/minikube_log ; } 2>&1
+  if [ "$(minikube status | grep -c "Running")" != 0 ]
+  then
+    Kube_message "$GREEN" "Minikube launched 😎😎😎"
+  else
+    Kube_message "$RED" "Minikube failed to start 🤦‍♀"
+    printf "$BOLD%s" "Trying again..."
+    echo "$STD"
+    ./start.sh re kube
+  fi
 else
-  Kube_message "$GREEN" "      Minikube is already running 😇     "
-	Img_message
+  Kube_message "$GREEN" "Minikube is running now 😇"
 fi
 
+# IF SOME SERVICE NEED TO BE RELOAD
+if [ "$1" = 're' ] && [ "$2" != 'kube' ]
+then
+  printf "$RED$BOLD%s %s %s" "Removing" "$2" "configuration"
+  echo "$STD"
+  kubectl delete deploy "$2"-deployment
+  kubectl delete svc "$2"-service
+  if [ "$2" = 'mysql' ] || [ "$2" = 'influx' ]
+  then
+    printf "$RED$BOLD%s %s %s" "Removing" "$2" "volume..."
+    echo "$STD"
+    kubectl delete pvc "$2"-pvc
+    kubectl delete pv "$2"-pv
+  fi
+fi
+
+# SWITCH DOCKER INTO MINIKUBE
 eval "$(minikube docker-env)"
 
-if [ "$1" = 're' ]
+# BUILDING IMAGES
+for SERVICE in $SERVICE_LIST
+do
+  Build_message "$SERVICE"
+  docker build -t "$SERVICE"_image srcs/"$SERVICE" > srcs/"$SERVICE"/build_log
+done
+
+printf "$BOLD$BLUE%s" "Applying yaml configurations 💫"
+echo "$STD"
+
+# APPLY ALL YAML CONFIGURATIONS
+kubectl apply -k ./srcs > srcs/kustomization_log
+
+# LAUNCH DASHBOARD
+if [ "$3" != 'd' ] && [ "$2" != 'd' ] && [ "$1" != 'd' ]
 then
-  if [ "$2" = 'nginx' ]
-  then
-    kubectl delete deploy nginx-deployment
-    kubectl delete svc nginx-service
-  fi
-  if [ "$2" = 'mysql' ]
-  then
-    kubectl delete deploy mysql-deployment
-    kubectl delete svc mysql-service
-    kubectl delete pvc --all
-    kubectl delete pv --all
-  fi
-  if [ "$2" = 'php' ]
-  then
-    kubectl delete deploy php-deployment
-    kubectl delete svc php-service
-  fi
-  if [ "$2" = 'wp' ]
-  then
-    kubectl delete deploy wordpress-deployment
-    kubectl delete svc wordpress-service
-  fi
-  if [ "$2" = 'ftps' ]
-  then
-    kubectl delete deploy ftps-deployment
-    kubectl delete svc ftps-service
-  fi
-  if [ "$2" = 'grafana' ]
-  then
-	kubectl delete deploy grafana-deployment
-	kubectl delete svc grafana-service
-	fi
-  if [ "$2" = 'influx' ]
-  then
-	kubectl delete deploy influx-deployment
-	kubectl delete svc influx-service
-  kubectl delete pvc --all
-  kubectl delete pv --all
-	fi
-  if [ "$2" = 'all' ]
-  then
-    ./start.sh re nginx
-    ./start.sh re mysql
-    ./start.sh re php
-    ./start.sh re wp
-    ./start.sh re ftps
-    ./start.sh re grafana
-    ./start.sh re influx
-	fi
-fi
-
-
-docker build -t nginx_image srcs/nginx
-docker build -t mysql_image srcs/mysql
-docker build -t php_image srcs/phpmyadmin
-docker build -t wordpress_image srcs/wordpress
-docker build -t ftps_image srcs/ftps
-docker build -t grafana_image srcs/grafana
-#docker build -t influx_image srcs/influxdb
-
-Kube_message "$BLUE" "     Applying yaml configurations 💫     "
-sleep 1
-
-kubectl apply -k ./srcs
-
-if [ "$1" != 'd' ] && [ "$2" != 'd' ] && [ "$3" != 'd' ]
-then
-	minikube dashboard
+  echo ''
+  printf "$RED$BOLD%s" "Launching dashboard 🚀🚀🚀"
+  echo "$STD"
+	minikube dashboard &>/dev/null
 fi
