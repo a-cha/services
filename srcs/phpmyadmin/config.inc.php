@@ -76,7 +76,6 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
  */
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
-$cfg['TempDir'] = '/www/phpMyAdmin-5.0.2-all-languages/tmp/';
 
 $cfg['ThemeDefault'] = 'metro';
 /**
