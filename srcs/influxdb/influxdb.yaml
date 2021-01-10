@@ -49,7 +49,7 @@ spec:
           name: influxdb
         volumeMounts:
         - name: influxdb-pv
-          mountPath: /var/lib/influxdb
+          mountPath: /root/.influxdb
         - name: dockersock
           mountPath: /var/run/docker.sock
       volumes:

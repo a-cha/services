@@ -36,9 +36,8 @@ RUN			./usr/bin/telegraf -sample-config --input-filter docker --output-filter in
 RUN			mkdir -p /var/lib/influxdb
 COPY		supervisor.conf /etc/supervisord.conf
 
-VOLUME		/var/lib/influxdb
+VOLUME		/root/.influxdb
 
 EXPOSE		8086
 
-#ENTRYPOINT sh
 ENTRYPOINT	["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
