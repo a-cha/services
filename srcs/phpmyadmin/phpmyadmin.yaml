@@ -27,8 +27,8 @@ spec:
   selector:
     matchLabels:
       app: phpmyadmin
-#  strategy:
-#    type: Recreate
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
