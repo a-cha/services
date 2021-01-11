@@ -42,7 +42,6 @@ RUN			mkdir -p /var/run/php
 RUN			mkdir -p /var/run/nginx
 RUN			touch /var/run/nginx/nginx.pid
 
-#COPY		nginx_default /etc/nginx/nginx.conf
 RUN			rm -f /etc/nginx/conf.d/default.conf
 COPY		nginx_default /etc/nginx/conf.d/default.conf
 COPY		supervisor.conf /etc/supervisord.conf

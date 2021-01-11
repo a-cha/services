@@ -1,7 +1,3 @@
-#secretGenerator:
-#- name: mysql-pass
-#  literals:
-#  - password=sadolph
 resources:
     - configmap.yaml
     - volumes.yaml

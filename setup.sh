@@ -32,6 +32,7 @@ if [ "$1" = 're' ] && [ "$2" = 'kube' ]
 then
   Print_message "$RED" "Deleting minikube"
   minikube delete > /dev/null
+  ./setup.sh clean
 fi
 
 if [ "$(minikube status | grep -c "Running")" = 0 ]
@@ -39,15 +40,7 @@ then
   Print_message "" "Trying to start minikube..."
 	{ minikube start --vm-driver=virtualbox > srcs/minikube_log ; } 2>&1
 	{ minikube addons enable metallb >> srcs/minikube_log ; } 2>&1
-  { kubectl apply -f srcs/configmap.yaml >> srcs/minikube_log ; } 2>&1
-  if [ "$(minikube status | grep -c "Running")" != 0 ]
-  then
-    Print_message "$GREEN" "Minikube launched 😎😎😎"
-  else
-    Print_message "$RED" "Minikube failed to start 🤦‍♀"
-    Print_message "" "Trying again..."
-    ./start.sh re kube
-  fi
+  Print_message "$GREEN" "Minikube launched 😎😎😎"
 else
   Print_message "$GREEN" "Minikube is running now 😇"
 fi

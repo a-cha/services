@@ -12,7 +12,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 3000
-#     maybe I don't need it
       targetPort: 3000
 ---
 apiVersion: apps/v1

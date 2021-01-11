@@ -24,7 +24,6 @@ RUN			mkdir -p /etc/influxdb
 RUN			wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.2-static_linux_amd64.tar.gz
 RUN			tar -zxvf influxdb-1.8.2-static_linux_amd64.tar.gz -C /etc/influxdb
 RUN			rm -rf influxdb-1.8.2-static_linux_amd64.tar.gz
-#RUN			mv /influxdb-1.8.2-1 /etc/influxdb
 
 RUN			wget https://dl.influxdata.com/telegraf/releases/telegraf-1.15.3_linux_amd64.tar.gz
 RUN			tar -zxvf telegraf-1.15.3_linux_amd64.tar.gz
