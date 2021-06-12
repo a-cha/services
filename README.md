@@ -19,4 +19,4 @@ Kubernetes (minikube) cluster configured as shown on the scheme:
 
 Run `setup.sh` script to up the cluster and launch Kubernetes dashboard. Now you can use all this services. 
 
-Also, there are possibility to reload cluster by `./setup.sh re kube` or reload certain service (for example, `./setup.sh re grefana`).
+Also, there are possibility to reload cluster by `./setup.sh re kube` or reload certain service (for example, `./setup.sh re grafana`).
