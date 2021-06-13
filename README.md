@@ -2,7 +2,7 @@
 
 ###### _Setting up a multi-service cluster using Kubernetes_
 
-#### The cluster contains:
+### The cluster contains:
 - Nginx
 - WordPress
 - PhpMyAdmin
